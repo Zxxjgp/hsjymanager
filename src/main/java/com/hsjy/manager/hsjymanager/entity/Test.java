@@ -8,6 +8,12 @@ public class Test {
     private String password;
     private String id;
 
+    public Test(String username, String password, String id) {
+        this.username = username;
+        this.password = password;
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }
