@@ -70,6 +70,11 @@
 		</dependency>
 
 		<!-- shiro spring. -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
 		<!-- 阿里JSON解析器 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsjy.manager.hsjymanager.dao.UserDao">
+
+    <resultMap id="testtable" type="com.hsjy.manager.hsjymanager.entity.User">
+            <id property="id" column="id" ></id>
+            <result property="username" column="userName"/>
+            <result property="password" column="password"/>
+    </resultMap>
+    <select id="findByUsername" resultMap="testtable" parameterType="String">
+        SELECT  * from user_sys  where username = #{ userName }
+    </select>
+</mapper>

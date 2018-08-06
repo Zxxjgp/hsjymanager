@@ -13,8 +13,8 @@ public class User
 {
     private static final long serialVersionUID = 1L;
 
+    private String id;
     /** 用户ID */
-    private Long userId;
 
     /** 部门ID */
     private Long deptId;
@@ -26,7 +26,7 @@ public class User
     private String loginName;
 
     /** 用户名称 */
-    private String userName;
+    private String username;
 
     /** 用户邮箱 */
     private String email;
@@ -66,24 +66,20 @@ public class User
     /** 岗位组 */
     private Long[] postIds;
 
-    public Long getUserId()
-    {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public void setUserId(Long userId)
-    {
-        this.userId = userId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public boolean isAdmin()
-    {
-        return isAdmin(this.userId);
+    public String getUsername() {
+        return username;
     }
 
-    public static boolean isAdmin(Long userId)
-    {
-        return userId != null && 1L == userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Long getDeptId()
@@ -114,16 +110,6 @@ public class User
     public void setLoginName(String loginName)
     {
         this.loginName = loginName;
-    }
-
-    public String getUserName()
-    {
-        return userName;
-    }
-
-    public void setUserName(String userName)
-    {
-        this.userName = userName;
     }
 
     public String getEmail()

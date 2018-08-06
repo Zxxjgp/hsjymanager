@@ -1,5 +1,6 @@
 package com.hsjy.manager.hsjymanager.controller;
 
+import com.hsjy.manager.hsjymanager.service.UserService;
 import com.hsjy.manager.hsjymanager.utils.result.Result;
 import com.hsjy.manager.hsjymanager.utils.result.ResultGenerator;
 import org.apache.shiro.SecurityUtils;
@@ -8,8 +9,8 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 /**
  * 首页 业务处理
