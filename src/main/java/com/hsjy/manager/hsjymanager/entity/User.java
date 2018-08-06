@@ -1,7 +1,9 @@
 package com.hsjy.manager.hsjymanager.entity;
 
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,32 +11,36 @@ import java.util.Date;
  * 
  * @author ruoyi
  */
-public class User
-{
+public class User extends Model<User>{
     private static final long serialVersionUID = 1L;
-
-    private String id;
     /** 用户ID */
 
+    private String userId;
+
     /** 部门ID */
-    private Long deptId;
+    private String deptId;
 
     /** 部门父ID */
-    private Long parentId;
+    private String parentId;
 
     /** 登录名称 */
+
     private String loginName;
 
     /** 用户名称 */
-    private String username;
+
+    private String userName;
 
     /** 用户邮箱 */
+
     private String email;
 
     /** 手机号码 */
+
     private String phonenumber;
 
     /** 用户性别 */
+
     private String sex;
 
     /** 用户头像 */
@@ -59,189 +65,216 @@ public class User
     private Date loginDate;
 
     /** 部门对象 */
+    private Dept dept;
 
     /** 角色组 */
-    private Long[] roleIds;
+    private String[] roleIds;
 
     /** 岗位组 */
-    private Long[] postIds;
+    private String[] postIds;
+    /** 创建者 */
+    private String createBy;
 
-    public String getId() {
-        return id;
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+
+    /** 更新者 */
+    private String updateBy;
+
+    /** 更新时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+
+    /** 备注 */
+    private String remark;
+
+    @Override
+    protected Serializable pkVal() {
+        return this.userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getUserId() {
+        return userId;
     }
 
-    public String getUsername() {
-        return username;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Long getDeptId()
-    {
+    public String getDeptId() {
         return deptId;
     }
 
-    public void setDeptId(Long deptId)
-    {
+    public void setDeptId(String deptId) {
         this.deptId = deptId;
     }
 
-    public Long getParentId()
-    {
+    public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(Long parentId)
-    {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 
-    public String getLoginName()
-    {
+    public String getLoginName() {
         return loginName;
     }
 
-    public void setLoginName(String loginName)
-    {
+    public void setLoginName(String loginName) {
         this.loginName = loginName;
     }
 
-    public String getEmail()
-    {
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getPhonenumber()
-    {
+    public String getPhonenumber() {
         return phonenumber;
     }
 
-    public void setPhonenumber(String phonenumber)
-    {
+    public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
     }
 
-    public String getSex()
-    {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(String sex)
-    {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
-    public String getAvatar()
-    {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar)
-    {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getSalt()
-    {
+    public String getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt)
-    {
+    public void setSalt(String salt) {
         this.salt = salt;
     }
 
-    /**
-     * 生成随机盐
-     */
-    public void randomSalt()
-    {
-        // 一个Byte占两个字节，此处生成的3字节，字符串长度为6
-        SecureRandomNumberGenerator secureRandom = new SecureRandomNumberGenerator();
-        String hex = secureRandom.nextBytes(3).toHex();
-        setSalt(hex);
-    }
-
-    public String getStatus()
-    {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status)
-    {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public String getDelFlag()
-    {
+    public String getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(String delFlag)
-    {
+    public void setDelFlag(String delFlag) {
         this.delFlag = delFlag;
     }
 
-    public String getLoginIp()
-    {
+    public String getLoginIp() {
         return loginIp;
     }
 
-    public void setLoginIp(String loginIp)
-    {
+    public void setLoginIp(String loginIp) {
         this.loginIp = loginIp;
     }
 
-    public Date getLoginDate()
-    {
+    public Date getLoginDate() {
         return loginDate;
     }
 
-    public void setLoginDate(Date loginDate)
-    {
+    public void setLoginDate(Date loginDate) {
         this.loginDate = loginDate;
     }
 
+    public Dept getDept() {
+        return dept;
+    }
 
-    public Long[] getRoleIds()
-    {
+    public void setDept(Dept dept) {
+        this.dept = dept;
+    }
+
+    public String[] getRoleIds() {
         return roleIds;
     }
 
-    public void setRoleIds(Long[] roleIds)
-    {
+    public void setRoleIds(String[] roleIds) {
         this.roleIds = roleIds;
     }
 
-    public Long[] getPostIds()
-    {
+    public String[] getPostIds() {
         return postIds;
     }
 
-    public void setPostIds(Long[] postIds)
-    {
+    public void setPostIds(String[] postIds) {
         this.postIds = postIds;
     }
 
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }

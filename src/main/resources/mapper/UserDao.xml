@@ -10,4 +10,8 @@
     <select id="findByUsername" resultMap="testtable" parameterType="String">
         SELECT  * from user_sys  where username = #{ userName }
     </select>
+
+    <select id="findAllUserList" parameterType="map" resultType="com.hsjy.manager.hsjymanager.entity.User">
+          SELECT  * from user_sys
+    </select>
 </mapper>

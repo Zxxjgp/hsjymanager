@@ -1,5 +1,6 @@
 package com.hsjy.manager.hsjymanager.dao;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.hsjy.manager.hsjymanager.entity.QueryUser;
 import com.hsjy.manager.hsjymanager.entity.User;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,8 +19,7 @@ import java.util.List;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@Mapper
-public interface UserDao {
+public interface UserDao extends BaseMapper<User> {
     /**
      * 根据用户名查找
      * @param username
@@ -38,6 +38,7 @@ public interface UserDao {
      * @param queryUser
      * @return
      */
+  /*  @Select("select * from user_sys")*/
     List<User> findAllUserList(QueryUser queryUser);
 
 }

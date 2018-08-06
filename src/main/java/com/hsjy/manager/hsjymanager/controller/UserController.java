@@ -3,13 +3,11 @@ package com.hsjy.manager.hsjymanager.controller;
 import com.hsjy.manager.hsjymanager.entity.QueryUser;
 import com.hsjy.manager.hsjymanager.entity.User;
 import com.hsjy.manager.hsjymanager.service.UserService;
+import com.hsjy.manager.hsjymanager.utils.page.Page;
 import com.hsjy.manager.hsjymanager.utils.result.Result;
 import com.hsjy.manager.hsjymanager.utils.result.ResultGenerator;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -44,7 +42,8 @@ public class UserController {
      * 分页查询所有的用户
      */
     @GetMapping("getAllUserList")
-    public List<User> getAllUserList(QueryUser queryUser){
-        return userService.findAllUserList(queryUser);
+    @ResponseBody
+    public Page<User> getAllUserList(Page page, QueryUser queryUser){
+        return userService.findAllUserList(page,queryUser);
     }
 }

@@ -2,8 +2,9 @@ package com.hsjy.manager.hsjymanager.service;
 
 import com.hsjy.manager.hsjymanager.entity.QueryUser;
 import com.hsjy.manager.hsjymanager.entity.User;
+import com.hsjy.manager.hsjymanager.utils.page.Page;
 
-import java.util.List;
+
 
 public interface UserService {
     /**
@@ -24,5 +25,5 @@ public interface UserService {
      * @param queryUser
      * @return
      */
-    List<User> findAllUserList(QueryUser queryUser);
+    Page<User> findAllUserList(Page page, QueryUser queryUser);
 }

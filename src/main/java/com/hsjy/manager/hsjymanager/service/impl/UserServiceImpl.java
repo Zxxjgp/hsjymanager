@@ -1,9 +1,11 @@
 package com.hsjy.manager.hsjymanager.service.impl;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.hsjy.manager.hsjymanager.dao.UserDao;
 import com.hsjy.manager.hsjymanager.entity.QueryUser;
 import com.hsjy.manager.hsjymanager.entity.User;
 import com.hsjy.manager.hsjymanager.service.UserService;
+import com.hsjy.manager.hsjymanager.utils.page.Page;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,22 +24,24 @@ import java.util.List;
  * @Version: 1.0
  */
 @Service
-public class UserServiceImpl implements UserService {
-    @Resource
-    private UserDao userDao;
-
+public class UserServiceImpl extends ServiceImpl<UserDao,User> implements UserService {
     @Override
     public User findByUsername(String username) {
-        return userDao.findByUsername(username);
+        return baseMapper.findByUsername(username);
     }
 
     @Override
     public int insertUser(User user) {
-        return userDao.insertUser(user);
+        return baseMapper.insertUser(user);
     }
 
     @Override
-    public List<User> findAllUserList(QueryUser queryUser) {
-        return userDao.findAllUserList(queryUser);
+    public Page<User> findAllUserList(Page page, QueryUser queryUser){
+        List<User> list = baseMapper.findAllUserList(queryUser);
+        page.setCount(page.getTotal());
+        page.setList(list);
+        return page;
     }
+
+
 }
