@@ -277,4 +277,9 @@ public class User extends Model<User>{
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+    public static boolean isAdmin(String userId)
+    {
+        return userId != null && String.valueOf(1L) == userId;
+    }
 }

@@ -52,7 +52,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         User user = null;
         String password = String.valueOf(upToken.getPassword());
         try {
-            user = userService.findByUsername(username);
+            user = userService.selectUserByLoginName(username);
         }catch ( CaptchaException e)
         {
             throw new AuthenticationException(e.getMessage(), e);
@@ -84,7 +84,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
         if (password != null) {
             ByteSource credentialsSalt = ByteSource.Util.bytes(username);
-            SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUsername(),password, credentialsSalt, getName());
+            SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(),password, credentialsSalt, getName());
 
             return authenticationInfo;
         }
