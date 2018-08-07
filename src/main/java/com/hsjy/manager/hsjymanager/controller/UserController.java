@@ -61,6 +61,12 @@ public class UserController {
     public Page<User> getAllUserList(Page page, QueryUser queryUser){
         return userService.findAllUserList(page,queryUser);
     }*/
+
+    @GetMapping("listUser")
+    @ResponseBody
+    public Page<User> getListUser(Page page, User user){
+        return userService.selectUserList(page, user);
+    }
     /**
      * 新增用户
      */
