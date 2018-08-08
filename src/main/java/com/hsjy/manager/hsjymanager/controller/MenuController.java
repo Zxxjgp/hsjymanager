@@ -23,7 +23,7 @@ import java.util.Map;
  * @author jgp
  */
 @Controller
-@RequestMapping("/system/menu")
+@RequestMapping("/menu")
 public class MenuController
 {
 
@@ -32,14 +32,13 @@ public class MenuController
     @Autowired
     private MenuService menuService;
 
-    @RequiresPermissions("system:menu:view")
     @GetMapping()
     public String menu()
     {
         return prefix + "/menu";
     }
 
-    @GetMapping("/list")
+    @GetMapping("list")
     @ResponseBody
     public List<Menu> list(Menu menu)
     {

@@ -1,11 +1,15 @@
 package com.hsjy.manager.hsjymanager.entity;
 
+import com.baomidou.mybatisplus.activerecord.Model;
+
+import java.io.Serializable;
+
 /**
  * 角色和菜单关联 sys_role_menu
  * 
  * @author jgp
  */
-public class RoleMenu
+public class RoleMenu extends Model<RoleMenu>
 {
     /** 角色ID */
     private Long roleId;
@@ -38,4 +42,8 @@ public class RoleMenu
         return "RoleMenu [roleId=" + roleId + ", menuId=" + menuId + "]";
     }
 
+    @Override
+    protected Serializable pkVal() {
+        return this.menuId;
+    }
 }

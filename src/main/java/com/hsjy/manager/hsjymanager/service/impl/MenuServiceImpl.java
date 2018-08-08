@@ -10,6 +10,7 @@ import com.hsjy.manager.hsjymanager.utils.StringUtils;
 import com.hsjy.manager.hsjymanager.utils.TreeUtils;
 import com.hsjy.manager.hsjymanager.utils.constant.UserConstants;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.MessageFormat;
@@ -52,6 +53,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao,Menu> implements MenuSe
      * @return 所有菜单信息
      */
     @Override
+    @Transactional
     public List<Menu> selectMenuList(Menu menu) {
         return baseMapper.selectMenuList(menu);
     }
