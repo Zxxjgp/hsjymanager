@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -66,7 +67,6 @@ public class MyBatisConfig {
     private String driverClassName;
 
     @Bean
-    @Primary
     public DataSource dataSource()
     {
         DruidDataSource datasource = new DruidDataSource();
@@ -77,6 +77,8 @@ public class MyBatisConfig {
         datasource.setDriverClassName(driverClassName);
         return datasource;
     }
+
+
 
     @Bean(name="transactionManager")
     public DataSourceTransactionManager transactionManager(){
@@ -100,7 +102,7 @@ public class MyBatisConfig {
      * @return
      */
     @Bean
-    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean() {
+    public MybatisSqlSessionFactoryBean sqlSessionFactoryBean() {
         MybatisSqlSessionFactoryBean mybatisPlus = new MybatisSqlSessionFactoryBean();
         mybatisPlus.setDataSource(dataSource());
         mybatisPlus.setVfs(SpringBootVFS.class);

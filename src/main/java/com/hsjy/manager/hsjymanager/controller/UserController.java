@@ -14,6 +14,7 @@ import com.hsjy.manager.hsjymanager.utils.page.Page;
 import com.hsjy.manager.hsjymanager.utils.result.Result;
 import com.hsjy.manager.hsjymanager.utils.result.ResultGenerator;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,6 +65,7 @@ public class UserController {
 
     @GetMapping("listUser")
     @ResponseBody
+    @Transactional
     public Page<User> getListUser(Page page, User user){
         return userService.selectUserList(page, user);
     }

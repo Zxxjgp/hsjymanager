@@ -1,13 +1,8 @@
 package com.hsjy.manager.hsjymanager.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.hsjy.manager.hsjymanager.dao.RoleDao;
-import com.hsjy.manager.hsjymanager.dao.UserDao;
-import com.hsjy.manager.hsjymanager.dao.UserRoleMapper;
-import com.hsjy.manager.hsjymanager.entity.QueryUser;
-import com.hsjy.manager.hsjymanager.entity.Role;
-import com.hsjy.manager.hsjymanager.entity.User;
-import com.hsjy.manager.hsjymanager.entity.UserRole;
+import com.hsjy.manager.hsjymanager.dao.*;
+import com.hsjy.manager.hsjymanager.entity.*;
 import com.hsjy.manager.hsjymanager.service.DeptService;
 import com.hsjy.manager.hsjymanager.service.RoleService;
 import com.hsjy.manager.hsjymanager.service.UserService;
@@ -19,6 +14,7 @@ import com.hsjy.manager.hsjymanager.utils.constant.UserConstants;
 import com.hsjy.manager.hsjymanager.utils.exception.AuthException;
 import com.hsjy.manager.hsjymanager.utils.page.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -44,8 +40,14 @@ public class UserServiceImpl extends ServiceImpl<UserDao,User> implements UserSe
     @Resource
     private RoleDao roleService;
 
+    @Resource
+    private PostDao postDao;
+
+    @Resource
+    private UserPostDao userPostDao;
 
     @Override
+
     public Page<User> selectUserList(Page page, User user) {
         List<User> list = baseMapper.selectUserList(page, user);
         page.setCount(page.getTotal());
@@ -77,6 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao,User> implements UserSe
     public int deleteUserById(String userId) {
         try {
             userRoleMapper.deleteUserRoleByUserId(userId);
+            userPostDao.deleteUserPostByUserId(userId);
         } catch ( Exception e ) {
             throw new AuthException("删除关联哦用户失败",CodeConstants.DELETE_EXCEPTION);
         }
@@ -143,6 +146,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao,User> implements UserSe
         user.setUpdateBy("得到登录名称");
         userRoleMapper.deleteUserRoleByUserId(userId);
         insertUserRole(user);
+        userPostDao.deleteUserPostByUserId(userId);
+        insertUserPost(user);
         return baseMapper.updateUser(user);
     }
 
@@ -240,7 +245,38 @@ public class UserServiceImpl extends ServiceImpl<UserDao,User> implements UserSe
 
     @Override
     public String selectUserPostGroup(String userId) {
-        return null;
+        List<Post> list = postDao.selectPostsByUserId(userId);
+        StringBuffer idsStr = new StringBuffer();
+        for (Post post : list)
+        {
+            idsStr.append(post.getPostName()).append(",");
+        }
+        if (StringUtils.isNotEmpty(idsStr.toString()))
+        {
+            return idsStr.substring(0, idsStr.length() - 1);
+        }
+        return idsStr.toString();
     }
 
+    /**
+     * 新增用户岗位信息
+     *
+     * @param user 用户对象
+     */
+    public void insertUserPost(User user)
+    {
+        // 新增用户与岗位管理
+        List<UserPost> list = new ArrayList<UserPost>();
+        for (String postId : user.getPostIds())
+        {
+            UserPost up = new UserPost();
+            up.setUserId(user.getUserId());
+            up.setPostId(postId);
+            list.add(up);
+        }
+        if (list.size() > 0)
+        {
+            userPostDao.batchUserPost(list);
+        }
+    }
 }
