@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * 菜单信息
  * 
- * @author ruoyi
+ * @author jgp
  */
 @Controller
 @RequestMapping("/system/menu")
