@@ -31,6 +31,7 @@ public class DeptController {
     private DeptService deptService;
 
     @PostMapping("insertDept")
+    @ResponseBody
     public Result insertDept(@RequestBody Dept dept){
         try {
             return ResultGenerator.genSuccessResult(deptService.insertDept(dept));

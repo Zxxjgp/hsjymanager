@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.hsjy.manager.hsjymanager.dao.DeptDao;
 import com.hsjy.manager.hsjymanager.entity.Dept;
 import com.hsjy.manager.hsjymanager.service.DeptService;
+import com.hsjy.manager.hsjymanager.utils.MakeUUID;
 import com.hsjy.manager.hsjymanager.utils.constant.CodeConstants;
 import com.hsjy.manager.hsjymanager.utils.exception.AuthException;
 import com.hsjy.manager.hsjymanager.utils.page.Page;
@@ -35,6 +36,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao,Dept> implements DeptSe
 
     @Override
     public int insertDept(Dept dept) {
+        dept.setDeptId(MakeUUID.makerandomuuid());
         return baseMapper.insertDept(dept);
     }
 

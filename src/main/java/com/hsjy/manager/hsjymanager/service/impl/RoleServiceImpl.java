@@ -5,6 +5,7 @@ import com.hsjy.manager.hsjymanager.dao.RoleDao;
 import com.hsjy.manager.hsjymanager.entity.Role;
 import com.hsjy.manager.hsjymanager.service.RoleService;
 import com.hsjy.manager.hsjymanager.utils.Convert;
+import com.hsjy.manager.hsjymanager.utils.MakeUUID;
 import com.hsjy.manager.hsjymanager.utils.StringUtils;
 import com.hsjy.manager.hsjymanager.utils.constant.UserConstants;
 import org.springframework.stereotype.Service;
@@ -98,6 +99,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao,Role> implements RoleSe
 
     @Override
     public int insertRole(Role role) {
+        role.setRoleId(MakeUUID.makerandomuuid());
         role.setCreateBy("创建人");
 
         return baseMapper.insertRole(role);

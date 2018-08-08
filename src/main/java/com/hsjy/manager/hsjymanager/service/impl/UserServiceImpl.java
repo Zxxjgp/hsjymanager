@@ -8,6 +8,7 @@ import com.hsjy.manager.hsjymanager.service.RoleService;
 import com.hsjy.manager.hsjymanager.service.UserService;
 import com.hsjy.manager.hsjymanager.utils.Convert;
 import com.hsjy.manager.hsjymanager.utils.MD5Password;
+import com.hsjy.manager.hsjymanager.utils.MakeUUID;
 import com.hsjy.manager.hsjymanager.utils.StringUtils;
 import com.hsjy.manager.hsjymanager.utils.constant.CodeConstants;
 import com.hsjy.manager.hsjymanager.utils.constant.UserConstants;
@@ -99,6 +100,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao,User> implements UserSe
 
     @Override
     public int insertUser(User user) {
+        user.setUserId(MakeUUID.makerandomuuid());
         user.setSalt(user.getUserName());
         user.setPassword(MD5Password.generatePassword(user.getPassword(),user.getUserName()));
         user.setCreateBy("获取登陆的用户信息");
