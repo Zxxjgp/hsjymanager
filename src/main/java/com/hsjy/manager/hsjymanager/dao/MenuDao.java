@@ -1,6 +1,7 @@
 package com.hsjy.manager.hsjymanager.dao;
 
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.hsjy.manager.hsjymanager.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,10 +10,10 @@ import java.util.List;
 /**
  * 菜单表 数据层
  * 
- * @author ruoyi
+ * @author jgp
  */
 @Mapper
-public interface MenuMapper
+public interface MenuDao extends BaseMapper<Menu>
 {
 
     /**
@@ -21,7 +22,7 @@ public interface MenuMapper
      * @param userId 用户ID
      * @return 菜单列表
      */
-    List<Menu> selectMenusByUserId(Long userId);
+    List<Menu> selectMenusByUserId(String userId);
 
     /**
      * 根据用户ID查询权限
@@ -29,7 +30,7 @@ public interface MenuMapper
      * @param userId 用户ID
      * @return 权限列表
      */
-     List<String> selectPermsByUserId(Long userId);
+     List<String> selectPermsByUserId(String userId);
 
     /**
      * 根据角色ID查询菜单
@@ -37,7 +38,7 @@ public interface MenuMapper
      * @param roleId 角色ID
      * @return 菜单列表
      */
-    List<String> selectMenuTree(Long roleId);
+    List<String> selectMenuTree(String roleId);
 
     /**
      * 查询系统菜单列表
@@ -60,7 +61,7 @@ public interface MenuMapper
      * @param menuId 菜单ID
      * @return 结果
      */
-    int deleteMenuById(Long menuId);
+    int deleteMenuById(String menuId);
 
     /**
      * 根据菜单ID查询信息
@@ -68,7 +69,7 @@ public interface MenuMapper
      * @param menuId 菜单ID
      * @return 菜单信息
      */
-    Menu selectMenuById(Long menuId);
+    Menu selectMenuById(String menuId);
 
     /**
      * 查询菜单数量
@@ -76,7 +77,7 @@ public interface MenuMapper
      * @param parentId 菜单父ID
      * @return 结果
      */
-    int selectCountMenuByParentId(Long parentId);
+    int selectCountMenuByParentId(String parentId);
 
     /**
      * 新增菜单信息

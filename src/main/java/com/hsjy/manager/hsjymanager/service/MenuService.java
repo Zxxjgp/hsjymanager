@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * 菜单 业务层
  * 
- * @author ruoyi
+ * @author jgp
  */
 public interface MenuService
 {
@@ -22,7 +22,7 @@ public interface MenuService
      * @param userId 用户ID
      * @return 菜单列表
      */
-    List<Menu> selectMenusByUserId(Long userId);
+    List<Menu> selectMenusByUserId(String userId);
 
     /**
      * 查询系统菜单列表
@@ -45,7 +45,7 @@ public interface MenuService
      * @param userId 用户ID
      * @return 权限列表
      */
-     Set<String> selectPermsByUserId(Long userId);
+     Set<String> selectPermsByUserId(String userId);
 
     /**
      * 根据角色ID查询菜单
@@ -75,7 +75,7 @@ public interface MenuService
      * @param menuId 菜单ID
      * @return 结果
      */
-     int deleteMenuById(Long menuId);
+     int deleteMenuById(String menuId);
 
     /**
      * 根据菜单ID查询信息
@@ -83,7 +83,7 @@ public interface MenuService
      * @param menuId 菜单ID
      * @return 菜单信息
      */
-     Menu selectMenuById(Long menuId);
+     Menu selectMenuById(String menuId);
 
     /**
      * 查询菜单数量
@@ -91,7 +91,7 @@ public interface MenuService
      * @param parentId 菜单父ID
      * @return 结果
      */
-     int selectCountMenuByParentId(Long parentId);
+     int selectCountMenuByParentId(String parentId);
 
     /**
      * 查询菜单使用数量
@@ -99,7 +99,7 @@ public interface MenuService
      * @param menuId 菜单ID
      * @return 结果
      */
-     int selectCountRoleMenuByMenuId(Long menuId);
+     int selectCountRoleMenuByMenuId(String menuId);
 
     /**
      * 新增保存菜单信息

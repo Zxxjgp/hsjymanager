@@ -3,7 +3,6 @@ package com.hsjy.manager.hsjymanager.service;
 import com.hsjy.manager.hsjymanager.entity.User;
 import com.hsjy.manager.hsjymanager.utils.page.Page;
 
-import java.util.List;
 
 
 public interface UserService {

@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * 角色业务层
  * 
- * @author ruoyi
+ * @author jgp
  */
 @Mapper
 public interface RoleDao extends BaseMapper<Role>

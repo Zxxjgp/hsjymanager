@@ -1,6 +1,5 @@
 package com.hsjy.manager.hsjymanager.controller;
 
-import com.hsjy.manager.hsjymanager.service.UserService;
 import com.hsjy.manager.hsjymanager.utils.result.Result;
 import com.hsjy.manager.hsjymanager.utils.result.ResultGenerator;
 import org.apache.shiro.SecurityUtils;
@@ -8,8 +7,10 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 
 /**
@@ -46,4 +47,18 @@ public class IndexController
         }
         return ResultGenerator.genSuccessResult("登录成功");
     }
+
+    @GetMapping("/index")
+    public String index(ModelMap mmap)
+    {
+     /*   // 取身份信息
+        User user = getUser();
+        // 根据用户id取出菜单
+        List<Menu> menus = menuService.selectMenusByUserId(user.getUserId());
+        mmap.put("menus", menus);
+        mmap.put("user", user);
+        mmap.put("copyrightYear", ruoYiConfig.getCopyrightYear());*/
+        return "index";
+    }
+
 }

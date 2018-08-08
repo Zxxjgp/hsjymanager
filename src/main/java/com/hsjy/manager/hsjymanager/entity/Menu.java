@@ -12,19 +12,19 @@ import java.util.Map;
 /**
  * 角色对象 sys_menu
  * 
- * @author ruoyi
+ * @author jgp
  */
 public class Menu extends Model<Menu>
 {
     private static final long serialVersionUID = 1L;
     /** 菜单ID */
-    private Long menuId;
+    private String menuId;
     /** 菜单名称 */
     private String menuName;
     /** 父菜单名称 */
     private String parentName;
     /** 父菜单ID */
-    private Long parentId;
+    private String parentId;
     /** 显示顺序 */
     private String orderNum;
     /** 菜单URL */
@@ -120,15 +120,6 @@ public class Menu extends Model<Menu>
         this.params = params;
     }
 
-    public Long getMenuId()
-    {
-        return menuId;
-    }
-
-    public void setMenuId(Long menuId)
-    {
-        this.menuId = menuId;
-    }
 
     public String getMenuName()
     {
@@ -150,12 +141,12 @@ public class Menu extends Model<Menu>
         this.parentName = parentName;
     }
 
-    public Long getParentId()
+    public String getParentId()
     {
         return parentId;
     }
 
-    public void setParentId(Long parentId)
+    public void setParentId(String parentId)
     {
         this.parentId = parentId;
     }
@@ -228,6 +219,14 @@ public class Menu extends Model<Menu>
     public void setChildren(List<Menu> children)
     {
         this.children = children;
+    }
+
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
     }
 
     @Override

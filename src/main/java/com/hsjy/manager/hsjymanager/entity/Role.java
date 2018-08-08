@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 角色对象 sys_role
  * 
- * @author ruoyi
+ * @author jgp
  */
 public class Role extends Model<Role>
 {

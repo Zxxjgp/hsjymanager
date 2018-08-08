@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 岗位对象 sys_post
  * 
- * @author ruoyi
+ * @author jgp
  */
 public class Post extends Model<Post>
 {

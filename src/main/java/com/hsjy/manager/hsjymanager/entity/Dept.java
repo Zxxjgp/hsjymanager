@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * 部门对象 sys_dept
  * 
- * @author ruoyi
+ * @author jgp
  */
 public class Dept extends Model<Dept>
 {
