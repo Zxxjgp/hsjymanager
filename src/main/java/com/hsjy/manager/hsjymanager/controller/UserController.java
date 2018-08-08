@@ -1,7 +1,6 @@
 package com.hsjy.manager.hsjymanager.controller;
 
 import com.hsjy.manager.hsjymanager.entity.Dept;
-import com.hsjy.manager.hsjymanager.entity.QueryUser;
 import com.hsjy.manager.hsjymanager.entity.User;
 import com.hsjy.manager.hsjymanager.service.DeptService;
 import com.hsjy.manager.hsjymanager.service.RoleService;
@@ -14,12 +13,11 @@ import com.hsjy.manager.hsjymanager.utils.page.Page;
 import com.hsjy.manager.hsjymanager.utils.result.Result;
 import com.hsjy.manager.hsjymanager.utils.result.ResultGenerator;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @ProjectName: hsjymanager
@@ -63,9 +61,9 @@ public class UserController {
         return userService.findAllUserList(page,queryUser);
     }*/
 
-    @GetMapping("listUser")
+    @GetMapping("/listUser")
     @ResponseBody
-    @Transactional
+    
     public Page<User> getListUser(Page page, User user){
         return userService.selectUserList(page, user);
     }

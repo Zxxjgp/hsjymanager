@@ -4,14 +4,12 @@ import com.hsjy.manager.hsjymanager.entity.Dept;
 import com.hsjy.manager.hsjymanager.service.DeptService;
 import com.hsjy.manager.hsjymanager.utils.constant.CodeConstants;
 import com.hsjy.manager.hsjymanager.utils.exception.AuthException;
-import com.hsjy.manager.hsjymanager.utils.page.Page;
 import com.hsjy.manager.hsjymanager.utils.result.Result;
 import com.hsjy.manager.hsjymanager.utils.result.ResultGenerator;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @ProjectName: hsjymanager
@@ -26,7 +24,7 @@ import java.util.List;
  * @Version: 1.0
  * ResultGenerator.genSuccessResult
  */
-@RestController
+@Controller
 @RequestMapping("/dept")
 public class DeptController {
     @Resource
@@ -42,18 +40,21 @@ public class DeptController {
     }
 
     @GetMapping("getParasDeptList")
+    @ResponseBody
     public Result getParasDeptList(Dept dept){
         return  ResultGenerator.genSuccessResult(deptService.selectDeptList(dept));
 
     }
 
     @PostMapping("updateDept")
+    @ResponseBody
     public  Result updateDept(Dept dept){
         return ResultGenerator.genSuccessResult(deptService.updateDept(dept));
 
     }
 
     @GetMapping("findByIdDeptDetail")
+    @ResponseBody
     public  Result findByIdDeptDetail(String deptId){
         try {
             return ResultGenerator.genSuccessResult(deptService.selectDeptById(deptId));
@@ -62,6 +63,7 @@ public class DeptController {
         }
     }
     @GetMapping("checkDeptExistUser")
+    @ResponseBody
     public Result checkDeptExistUser(String deptId){
         try {
             return ResultGenerator.genSuccessResult(deptService.checkDeptExistUser(deptId));

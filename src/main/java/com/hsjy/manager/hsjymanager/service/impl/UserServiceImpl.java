@@ -47,7 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao,User> implements UserSe
     private UserPostDao userPostDao;
 
     @Override
-
+    @Transactional
     public Page<User> selectUserList(Page page, User user) {
         List<User> list = baseMapper.selectUserList(page, user);
         page.setCount(page.getTotal());
