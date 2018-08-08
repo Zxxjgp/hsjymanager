@@ -39,6 +39,11 @@ public class DynamicDataSourceAspect {
     @Before("daoAspect()")
     public void switchDataSource(JoinPoint point) {
         Boolean isQueryMethod = isQueryMethod(point.getSignature().getName());
+        if (isQueryMethod) {
+            DynamicDataSourceContextHolder.useSlaveDataSource();
+            logger.debug("Switch DataSource to [{}] in Method [{}]",
+                    DynamicDataSourceContextHolder.getDataSourceKey(), point.getSignature());
+        }
     }
 
     /**
@@ -48,6 +53,9 @@ public class DynamicDataSourceAspect {
      */
     @After("daoAspect())")
     public void restoreDataSource(JoinPoint point) {
+        DynamicDataSourceContextHolder.clearDataSourceKey();
+        logger.debug("Restore DataSource to [{}] in Method [{}]",
+                DynamicDataSourceContextHolder.getDataSourceKey(), point.getSignature());
     }
 
 
