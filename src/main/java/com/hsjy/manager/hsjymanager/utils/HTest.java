@@ -3,6 +3,12 @@ package com.hsjy.manager.hsjymanager.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hsjy.manager.hsjymanager.entity.Dept;
+import org.apache.commons.collections.MultiMap;
+import org.apache.commons.collections.map.MultiValueMap;
+import org.springframework.util.LinkedMultiValueMap;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @ProjectName: hsjymanager
@@ -21,5 +27,23 @@ public class HTest {
         Dept dept = new Dept();
         dept.setDeptId("wew");
         System.out.println(JSON.toJSONString(dept));
+
+        org.springframework.util.MultiValueMap<String,String> multiValueMap = new LinkedMultiValueMap<>();
+
+        multiValueMap.add("早班 9:00-11:00", "周一");
+        multiValueMap.add("早班 9:00-11:00", "周二");
+        multiValueMap.add("中班 13:00-16:00", "周三");
+        multiValueMap.add("早班 9:00-11:00", "周四");
+        multiValueMap.add("测试1天2次 09:00 - 12:00", "周五");
+        multiValueMap.add("测试1天2次 09:00 - 12:00", "周六");
+        multiValueMap.add("中班 13:00-16:00", "周日");
+        //打印所有值
+        Set<String> keySet = multiValueMap.keySet();
+        for (String key : keySet) {
+            List<String> values = multiValueMap.get(key);
+            System.out.println(StringUtils.join(values.toArray()," ")+":"+key);
+
+        }
+
     }
 }
