@@ -100,4 +100,11 @@ public class MyShiroRealm extends AuthorizingRealm {
         Object result = new SimpleHash(hashAlgorithmName, credentials, credentialsSalt, hashIterations);
         System.out.println(result);
     }
+    /**
+     * 清理缓存权限
+     */
+    public void clearCachedAuthorizationInfo()
+    {
+        this.clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
+    }
 }
