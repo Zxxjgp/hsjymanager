@@ -2,6 +2,7 @@ package com.hsjy.manager.hsjymanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication

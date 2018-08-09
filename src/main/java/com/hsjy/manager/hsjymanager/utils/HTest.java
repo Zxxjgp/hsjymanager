@@ -1,11 +1,7 @@
 package com.hsjy.manager.hsjymanager.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.hsjy.manager.hsjymanager.entity.Dept;
-import org.apache.commons.collections.MultiMap;
-import org.apache.commons.collections.map.MultiValueMap;
-import org.springframework.util.LinkedMultiValueMap;
 
 import java.util.List;
 import java.util.Set;
@@ -24,7 +20,7 @@ import java.util.Set;
  */
 public class HTest {
     public static void main(String[] args) {
-        Dept dept = new Dept();
+/*        Dept dept = new Dept();
         dept.setDeptId("wew");
         System.out.println(JSON.toJSONString(dept));
 
@@ -43,7 +39,7 @@ public class HTest {
             List<String> values = multiValueMap.get(key);
             System.out.println(StringUtils.join(values.toArray()," ")+":"+key);
 
-        }
+        }*/
 
     }
 }

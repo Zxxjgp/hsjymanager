@@ -1,6 +1,5 @@
 package com.hsjy.manager.hsjymanager.utils;
 
-
 import com.hsjy.manager.hsjymanager.entity.User;
 import com.hsjy.manager.hsjymanager.realm.MyShiroRealm;
 import org.apache.shiro.SecurityUtils;

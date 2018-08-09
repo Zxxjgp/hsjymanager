@@ -2,7 +2,9 @@ package com.hsjy.manager.hsjymanager.realm;
 
 import com.hsjy.manager.hsjymanager.entity.User;
 import com.hsjy.manager.hsjymanager.service.UserService;
+import com.hsjy.manager.hsjymanager.utils.constant.CodeConstants;
 import com.hsjy.manager.hsjymanager.utils.constant.user.*;
+import com.hsjy.manager.hsjymanager.utils.exception.AuthException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -50,41 +52,17 @@ public class MyShiroRealm extends AuthorizingRealm {
         String username = upToken.getUsername();
 
         User user = null;
-        String password = String.valueOf(upToken.getPassword());
         try {
             user = userService.selectUserByLoginName(username);
-        }catch ( CaptchaException e)
-        {
-            throw new AuthenticationException(e.getMessage(), e);
-        }
-        catch (UserNotExistsException e)
-        {
-            throw new UnknownAccountException(e.getMessage(), e);
-        }
-        catch (UserPasswordNotMatchException e)
-        {
-            throw new IncorrectCredentialsException(e.getMessage(), e);
-        }
-        catch (UserPasswordRetryLimitExceedException e)
-        {
-            throw new ExcessiveAttemptsException(e.getMessage(), e);
-        }
-        catch (UserBlockedException e)
-        {
-            throw new LockedAccountException(e.getMessage(), e);
-        }
-        catch (RoleBlockedException e)
-        {
-            throw new LockedAccountException(e.getMessage(), e);
         }
         catch (Exception e)
         {
             log.info("对用户[" + username + "]进行登录验证..验证未通过{}", e.getMessage());
-            throw new AuthenticationException(e.getMessage(), e);
+            throw new AuthException("对用户[" + username + "]进行登录验证..验证未通过{}", CodeConstants.FIND_EXCEPTION);
         }
-        if (password != null) {
+        if (user != null) {
             ByteSource credentialsSalt = ByteSource.Util.bytes(username);
-            SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(),password, credentialsSalt, getName());
+            SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username,user.getPassword(), credentialsSalt, getName());
 
             return authenticationInfo;
         }

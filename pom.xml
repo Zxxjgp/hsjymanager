@@ -131,6 +131,17 @@
 		</dependency>
 		<!--end-->
 
+		<!--strat-->
+<!--
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-quartz</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+-->
+
+
+		<!--end-->
 	<!--	阿里数据连接池-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
