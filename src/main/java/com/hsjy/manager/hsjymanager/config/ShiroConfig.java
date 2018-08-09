@@ -3,8 +3,14 @@ package com.hsjy.manager.hsjymanager.config;
 import com.hsjy.manager.hsjymanager.realm.MyShiroRealm;
 import com.hsjy.manager.hsjymanager.utils.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
+import org.apache.shiro.session.mgt.DefaultSessionManager;
+import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
+import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -16,6 +22,7 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -32,7 +39,7 @@ public class ShiroConfig {
 
     // 登录地址
     @Value("${shiro.user.loginUrl}")
-        private String loginUrl;
+    private String loginUrl;
 
     /**
      * 加密算法的使用
@@ -126,7 +133,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilters(filters);
 
         // 所有请求需要认证
-       /* filterChainDefinitionMap.put("/**", "user");*/
+        /* filterChainDefinitionMap.put("/**", "user");*/
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return shiroFilterFactoryBean;
@@ -147,7 +154,7 @@ public class ShiroConfig {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
         //rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
-            cookieRememberMeManager.setCipherKey(Base64.decode("3AvVhmFLUs0KTA3Kprsdag=="));
+        cookieRememberMeManager.setCipherKey(Base64.decode("3AvVhmFLUs0KTA3Kprsdag=="));
         return cookieRememberMeManager;
     }
 
@@ -155,6 +162,33 @@ public class ShiroConfig {
     public LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
+
+    @Bean
+    public JavaUuidSessionIdGenerator javaUuidSessionIdGenerator(){
+        JavaUuidSessionIdGenerator javaUuidSessionIdGenerator = new JavaUuidSessionIdGenerator();
+        return javaUuidSessionIdGenerator;
+    }
+    @Bean
+    public ExecutorServiceSessionValidationScheduler executorServiceSessionValidationScheduler(){
+        ExecutorServiceSessionValidationScheduler executorServiceSessionValidationScheduler = new ExecutorServiceSessionValidationScheduler();
+        executorServiceSessionValidationScheduler.setInterval(300000);
+        return executorServiceSessionValidationScheduler;
+    }
+
+
+    @Bean
+    @DependsOn("atLeastOneSuccessfulStrategy")
+    public ModularRealmAuthenticator modularRealmAuthenticator(){
+        ModularRealmAuthenticator modularRealmAuthenticator = new ModularRealmAuthenticator();
+        return modularRealmAuthenticator;
+    }
+
+    @Bean
+    public AtLeastOneSuccessfulStrategy atLeastOneSuccessfulStrategy(){
+        AtLeastOneSuccessfulStrategy atLeastOneSuccessfulStrategy = new AtLeastOneSuccessfulStrategy();
+        return atLeastOneSuccessfulStrategy;
+    }
+
 
     @Bean
     public DefaultAdvisorAutoProxyCreator getDefaultAdvisorAutoProxyCreator() {
@@ -165,7 +199,36 @@ public class ShiroConfig {
     @Bean
     public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
-        aasa.setSecurityManager(securityManager);
+        aasa.setSecurityManager(securityManager());
         return aasa;
     }
+
+    /**
+     * sessionDAO会话
+     */
+    @Bean
+    public EnterpriseCacheSessionDAO sessionDAO()
+    {
+        EnterpriseCacheSessionDAO sessionDAO = new EnterpriseCacheSessionDAO();
+        sessionDAO.setSessionIdGenerator(javaUuidSessionIdGenerator());
+        return sessionDAO;
+    }
+
+/*
+    @Bean
+    public DefaultSessionManager defaultSessionManager(){
+        DefaultSessionManager defaultWebSessionManager = new DefaultSessionManager();
+        defaultWebSessionManager.setGlobalSessionTimeout(1800000);
+        defaultWebSessionManager.setDeleteInvalidSessions(true);
+        defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
+        defaultWebSessionManager.setSessionValidationScheduler(executorServiceSessionValidationScheduler());
+        defaultWebSessionManager.setSessionDAO(sessionDAO());
+    */
+/*    defaultWebSessionManager.setSessionIdCookieEnabled(true);
+        defaultWebSessionManager.setSessionIdCookie(rememberMeCookie());*//*
+
+        return  defaultWebSessionManager;
+    }
+*/
+
 }

@@ -36,10 +36,12 @@ public class ShiroUtils
     {
         User user = null;
         Object obj = getSubjct().getPrincipal();
-        if (StringUtils.isNotNull(obj))
+        Subject subjct = getSubjct();
+        Object principal = subjct.getPrincipal();
+        if (StringUtils.isNotNull(subjct))
         {
             user = new User();
-            BeanUtils.copyBeanProp(user, obj);
+            BeanUtils.copyBeanProp(user, subjct);
         }
         return user;
     }

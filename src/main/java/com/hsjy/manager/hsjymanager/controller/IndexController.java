@@ -64,7 +64,7 @@ public class IndexController
     public String index(ModelMap mmap)
     {
         // 取身份信息
-        User user = ShiroUtils.getUser();
+        User user =getUser();
         List<Menu> menus = menuService.selectMenusByUserId(user.getUserId());
         mmap.put("menus", menus);
         mmap.put("user", user);
