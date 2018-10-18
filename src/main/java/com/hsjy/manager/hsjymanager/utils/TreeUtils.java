@@ -19,7 +19,7 @@ public class TreeUtils
      * 根据父节点的ID获取所有子节点
      * 
      * @param list 分类表
-     * @param typeId 传入的父节点ID
+     * @param  parentId
      * @return String
      */
     public static List<Menu> getChildPerms(List<Menu> list, String parentId)
@@ -29,13 +29,13 @@ public class TreeUtils
         {
             Menu t = (Menu) iterator.next();
             // 一、根据传入的某个父节点ID,遍历该父节点的所有子节点
-            if (t.getParentId() == parentId)
+            if (t.getParentId().equals(parentId) )
             {
                 recursionFn(list, t);
                 returnList.add(t);
             }
         }
-        return returnList;
+            return returnList;
     }
 
     /**
@@ -75,7 +75,7 @@ public class TreeUtils
         while (it.hasNext())
         {
             Menu n = (Menu) it.next();
-            if (n.getParentId() == t.getMenuId())
+            if (n.getParentId().equals(t.getMenuId()))
             {
                 tlist.add(n);
             }
@@ -102,7 +102,7 @@ public class TreeUtils
         {
             Menu node = (Menu) iterator.next();
             // 一、根据传入的某个父节点ID,遍历该父节点的所有子节点
-            if (node.getParentId() == typeId)
+            if (node.getParentId().equals(typeId))
             {
                 recursionFn(list, node, prefix);
             }

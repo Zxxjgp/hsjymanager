@@ -4,10 +4,10 @@
 
     <resultMap id="testtable" type="com.hsjy.manager.hsjymanager.entity.Test">
             <id property="id" column="id" ></id>
-            <result property="username" column="username"/>
-            <result property="password" column="password"/>
+            <result property="name" column="name"/>
+
     </resultMap>
     <select id="findall" resultMap="testtable">
-        SELECT  * from admin
+        SELECT  * from test
     </select>
 </mapper>

@@ -18,18 +18,18 @@ function login() {
 	$.modal.loading($("#btnSubmit").data("loading"));
 	var username = $.common.trim($("input[name='username']").val());
     var password = $.common.trim($("input[name='password']").val());
-  /*  var validateCode = $("input[name='validateCode']").val();
-    var rememberMe = $("input[name='rememberme']").is(':checked');*/
+  /*  var validateCode = $("input[name='validateCode']").val();*/
+    var rememberMe = $("input[name='rememberme']").is(':checked');
     $.ajax({
         type: "post",
-        url: ctx + "login",
+        url: ctx + "doLogin",
         data: {
             "username": username,
             "password": password,
 
         },
         success: function(r) {
-            if (r.code == 0) {
+            if (r.code == "SUCCESS") {
                 location.href = ctx + 'index';
             } else {
             	$.modal.closeLoading();

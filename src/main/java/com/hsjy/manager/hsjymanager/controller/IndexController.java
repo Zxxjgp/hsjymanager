@@ -3,7 +3,10 @@ package com.hsjy.manager.hsjymanager.controller;
 import com.hsjy.manager.hsjymanager.entity.Menu;
 import com.hsjy.manager.hsjymanager.entity.User;
 import com.hsjy.manager.hsjymanager.service.MenuService;
+import com.hsjy.manager.hsjymanager.service.UserService;
+import com.hsjy.manager.hsjymanager.utils.BeanUtils;
 import com.hsjy.manager.hsjymanager.utils.ShiroUtils;
+import com.hsjy.manager.hsjymanager.utils.constant.UserConstants;
 import com.hsjy.manager.hsjymanager.utils.result.Result;
 import com.hsjy.manager.hsjymanager.utils.result.ResultGenerator;
 import org.apache.shiro.SecurityUtils;
@@ -14,12 +17,16 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static com.hsjy.manager.hsjymanager.utils.ShiroUtils.getUser;
 
 
 /**
@@ -30,6 +37,8 @@ import static com.hsjy.manager.hsjymanager.utils.ShiroUtils.getUser;
 @Controller
 public class IndexController
 {
+    @Resource
+    private UserService userService;
     @Resource
     private MenuService menuService;
 
@@ -44,9 +53,9 @@ public class IndexController
     public Result helloWorld() {
         return ResultGenerator.genSuccessResult("helloworld");
     }
-    @GetMapping("/doLogin")
+    @PostMapping("/doLogin")
     @ResponseBody
-    public Result doLogin(String username, String password) {
+    public Result doLogin(HttpServletRequest reques, HttpSession session, String username, String password) {
 
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
@@ -56,20 +65,34 @@ public class IndexController
             token.clear();
             return ResultGenerator.genFailResult("登录失败，用户名或密码错误！");
         }
-        return ResultGenerator.genSuccessResult("登录成功");
+        User user = userService.selectUserByLoginName(username);
+
+        session.setMaxInactiveInterval(1800000);
+        session.setAttribute("key",user);
+        Map<String,String> map = new HashMap<>(16);
+        map.put("code",UserConstants.MENU_NAME_UNIQUE);
+        return ResultGenerator.genSuccessResult(map);
     }
 
     @GetMapping("/index")
-    @ResponseBody
-    public String index(ModelMap mmap)
+
+    public String index( HttpSession session, ModelMap mmap)
     {
         // 取身份信息
-        User user =getUser();
+        User user = (User) session.getAttribute("key");
+
         List<Menu> menus = menuService.selectMenusByUserId(user.getUserId());
         mmap.put("menus", menus);
         mmap.put("user", user);
         mmap.put("copyrightYear", "4646446");
         return "index";
+    }
+    // 系统介绍
+    @GetMapping("/system/main")
+    public String main(ModelMap mmap)
+    {
+        mmap.put("version", "2001-08-05");
+        return "main";
     }
 
 }

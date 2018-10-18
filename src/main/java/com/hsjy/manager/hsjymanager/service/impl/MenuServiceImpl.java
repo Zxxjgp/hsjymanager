@@ -44,7 +44,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao,Menu> implements MenuSe
     public List<Menu> selectMenusByUserId(String userId) {
         List<Menu> menus = baseMapper.selectMenusByUserId(userId);
 
-        return TreeUtils.getChildPerms(menus,userId);
+        return TreeUtils.getChildPerms(menus,"0");
     }
 
     /**

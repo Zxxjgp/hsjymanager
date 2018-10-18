@@ -9,6 +9,7 @@ import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
+import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -18,6 +19,7 @@ import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -172,6 +174,7 @@ public class ShiroConfig {
     public ExecutorServiceSessionValidationScheduler executorServiceSessionValidationScheduler(){
         ExecutorServiceSessionValidationScheduler executorServiceSessionValidationScheduler = new ExecutorServiceSessionValidationScheduler();
         executorServiceSessionValidationScheduler.setInterval(300000);
+        //executorServiceSessionValidationScheduler.setSessionManager(defaultSessionManager());
         return executorServiceSessionValidationScheduler;
     }
 
@@ -180,6 +183,7 @@ public class ShiroConfig {
     @DependsOn("atLeastOneSuccessfulStrategy")
     public ModularRealmAuthenticator modularRealmAuthenticator(){
         ModularRealmAuthenticator modularRealmAuthenticator = new ModularRealmAuthenticator();
+
         return modularRealmAuthenticator;
     }
 
@@ -214,21 +218,19 @@ public class ShiroConfig {
         return sessionDAO;
     }
 
-/*
     @Bean
-    public DefaultSessionManager defaultSessionManager(){
-        DefaultSessionManager defaultWebSessionManager = new DefaultSessionManager();
+    public DefaultWebSessionManager defaultSessionManager(){
+        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
         defaultWebSessionManager.setGlobalSessionTimeout(1800000);
         defaultWebSessionManager.setDeleteInvalidSessions(true);
         defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
         defaultWebSessionManager.setSessionValidationScheduler(executorServiceSessionValidationScheduler());
+
         defaultWebSessionManager.setSessionDAO(sessionDAO());
-    */
-/*    defaultWebSessionManager.setSessionIdCookieEnabled(true);
-        defaultWebSessionManager.setSessionIdCookie(rememberMeCookie());*//*
+        defaultWebSessionManager.setSessionIdCookieEnabled(true);
+        defaultWebSessionManager.setSessionIdCookie(rememberMeCookie());
 
         return  defaultWebSessionManager;
     }
-*/
 
 }

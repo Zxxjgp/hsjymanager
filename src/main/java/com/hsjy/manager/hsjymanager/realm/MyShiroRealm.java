@@ -54,11 +54,14 @@ public class MyShiroRealm extends AuthorizingRealm {
         User user = null;
         try {
             user = userService.selectUserByLoginName(username);
+            if (user  == null){
+                throw  new AuthException("当前用户不存在",CodeConstants.FIND_EXCEPTION);
+            }
         }
         catch (Exception e)
         {
             log.info("对用户[" + username + "]进行登录验证..验证未通过{}", e.getMessage());
-            throw new AuthException("对用户[" + username + "]进行登录验证..验证未通过{}", CodeConstants.FIND_EXCEPTION);
+            throw new AuthException("对用户[" + username + "]进行登录验证..验证未通过{},不存在", CodeConstants.FIND_EXCEPTION);
         }
         if (user != null) {
             ByteSource credentialsSalt = ByteSource.Util.bytes(username);
