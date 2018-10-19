@@ -81,6 +81,19 @@ public class MyShiroRealm extends AuthorizingRealm {
         Object result = new SimpleHash(hashAlgorithmName, credentials, credentialsSalt, hashIterations);
         System.out.println(result);
     }
+
+    public static String  getPassword(String password , String username) {
+        String hashAlgorithmName = "MD5";
+        Object credentials = password;
+        ByteSource credentialsSalt = ByteSource.Util.bytes(username);
+        int hashIterations = 1024;
+
+        Object result = new SimpleHash(hashAlgorithmName, credentials, credentialsSalt, hashIterations);
+        System.out.println(result);
+
+        return result.toString();
+    }
+
     /**
      * 清理缓存权限
      */

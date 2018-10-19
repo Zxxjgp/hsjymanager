@@ -2,6 +2,7 @@ package com.hsjy.manager.hsjymanager.controller;
 
 import com.hsjy.manager.hsjymanager.entity.Menu;
 import com.hsjy.manager.hsjymanager.entity.User;
+import com.hsjy.manager.hsjymanager.realm.MyShiroRealm;
 import com.hsjy.manager.hsjymanager.service.MenuService;
 import com.hsjy.manager.hsjymanager.service.UserService;
 import com.hsjy.manager.hsjymanager.utils.BeanUtils;
@@ -61,6 +62,8 @@ public class IndexController
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {
             subject.login(token);
+            token.setUsername(username);
+            token.setPassword(MyShiroRealm.getPassword(username,password).toCharArray());
         } catch (AuthenticationException e) {
             token.clear();
             return ResultGenerator.genFailResult("登录失败，用户名或密码错误！");
